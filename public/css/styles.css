@@ -7,13 +7,6 @@
 
 /* Base Reset */
 
-body {
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.6;
-  background-color: #f4f4f4;
-  color: #222;
-  padding: 0rem;
-}
 
 /* Wrapper */
 #wrapper {
@@ -63,29 +56,125 @@ nav ul li {
     text-align: center;
 }
 
-/* nav ul li a {
-    display: block;
-    color: #003049;
-    font-weight: 500;
-    font-size: 15px;
-    text-decoration: none;
-    text-align: center;
-    padding: 1rem 0;
-    width: 100%;
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  color: #333;
 }
 
-nav li a:hover {
-  background-color: rgb(135, 184, 104);
-} */
+/* Headings */
+h1 {
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
 
-/* Main */
-main {
+h2 {
+  /* padding-left: .5rem; */
+  margin-bottom: 0.5rem;
+  color: #34495e;
+}
+
+/* Car Section */
+#car {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+}
+
+#car > section {
+  background-color: rgba(145, 139, 139, 0.37);
+  border-radius: 1rem;
+  margin: .5rem;
   padding: 1rem;
 }
 
-main h1 {
-  margin-bottom: .5rem;
-  font-size: 2rem;
+#car img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+#car section p {
+  margin: 0.3rem 0;
+}
+
+#car button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#car button:hover {
+  background: #3498db;
+}
+
+
+
+/* Parts Section */
+.parts {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.parts section {
+  padding: 0;
+  margin: 0 auto;
+}
+
+/* Reviews List */
+.parts ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+/* Upgrades Grid */
+#figures {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 0;
+  padding-left: 0rem;
+  justify-items: center;
+}
+
+
+figure {
+  width: 100%;
+  max-width: 100px; 
+  margin: 0 auto;   
+  text-align: center;
+}
+
+figure img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  display: block;
+}
+
+figcaption a {
+  display: block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  color: #2980b9;
+}
+
+figcaption a:hover {
+  text-decoration: underline;
 }
 
 /* Footer */
@@ -95,4 +184,34 @@ footer {
   background-color: #003049;
   color: #fff;
   margin-top: 2rem;
+}
+
+
+/* =======================
+   Responsive Enhancements
+   ======================= */
+@media screen and (min-width: 650px) {
+  #car {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #car section {
+    flex: 1;
+  }
+
+  #car img {
+    flex: 1;
+    max-width: 450px;
+  }
+
+  #figures {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .parts {
+    display: flex;
+    flex-direction: row;
+  }
 }
