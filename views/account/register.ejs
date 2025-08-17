@@ -1,0 +1,18 @@
+<h1><%= title %></h1>
+
+<!-- Flash messages -->
+<%- messages() %>
+
+<form action="/account/register" method="post" class="register-form">
+  <label>First Name*<input type="text" id="accountFirstName" name="account_firstname" required></label>
+  
+  <label>Last Name*<input type="text" id="accountLastName" name="account_lastname" required></label>
+  
+  <label>Email*<input type="email" id="accountEmail" name="account_email" required></label>
+
+  <label>Password*<input type="password" id="accountPassword" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+    title="Password must be at least 12 characters and include a capital letter, number, and special character."></label>
+  
+
+  <button type="submit">Register</button>
+</form>
