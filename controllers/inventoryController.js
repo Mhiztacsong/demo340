@@ -38,7 +38,3 @@ invCont.buildByInventoryId = async function (req, res, next) {
 }
 
 module.exports = invCont
-// module.exports = {
-//   buildByClassificationId: utilities.handleErrors(invCont.buildByClassificationId),
-//   buildByInventoryId: utilities.handleErrors(invCont.buildByInventoryId),
-// };

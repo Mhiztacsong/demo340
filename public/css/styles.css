@@ -504,12 +504,12 @@ main img {
   list-style: none;
   padding: 10px 15px;
   margin: 20px auto;
-  max-width: 400px;
+  max-width: 350px;
   border-radius: 6px;
   color: #fff;
-  background-color: #041f357a; /* blue for notices */
+  background-color: #a02c287a;
   font-weight: bold;
-  text-align: center;
+  text-align: center; 
 }
 
 
