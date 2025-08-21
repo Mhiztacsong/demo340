@@ -119,4 +119,35 @@ validate.checkLoginData = async (req, res, next) => {
 }
 
 
+/************************************
+ * Add Classification Data Validation Rules
+ ************************************/
+validate.addClassificationRules = () => {
+  return [
+    body("classification_name")
+      .trim()
+      .notEmpty().withMessage("Classification name is required")
+      .bail()
+      .isAlphanumeric().withMessage("Only letters and numbers are allowed (no spaces or special characters).")
+  ]
+}
+
+validate.checkAddClassificationData = async (req, res, next) => {
+  const { classification_name } = req.body
+  let errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("inventory/add-classification", {
+      title: "Add New Classification",
+      nav,
+      classification_name,
+      errors,
+    })
+    return
+  }
+  next()
+}
+
+
 module.exports = validate
