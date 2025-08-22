@@ -13,7 +13,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
   const className = data[0].classification_name
-  res.render("./inventory/classification", {
+  res.render("inventory/classification", {
     title: className + " vehicles",
     nav,
     grid,
@@ -30,7 +30,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
   console.log(vehicle)
   const html = await utilities.buildVehicleDetailHTML(vehicle)
   let nav = await utilities.getNav() 
-  res.render("./inventory/detail", {
+  res.render("inventory/detail", {
     title: `${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}`,
     nav,
     html,
@@ -43,7 +43,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
  * ***************************** */
 invCont.managementView = async function (req, res, next) {
   let nav = await utilities.getNav()
-  res.render("./inventory/management", {
+  res.render("inventory/management", {
     title: "Account Management",
     nav,
     errors: null
@@ -78,11 +78,55 @@ invCont.addClassification = async function (req, res, next) {
     res.redirect("/inv/management")
   } else {
     req.flash("notice", "Sorry classification not added, try again.")
-    res.render("./inventory/add-classification", {
+    res.render("inventory/add-classification", {
       title: "Add New Classification",
       nav,
       errors: null
     })
+  }
+}
+
+/* ********************************
+ *  View to display add-inventory form
+ * ***************************** */
+
+invCont.buildAddInventory = async function (req, res) {
+  let nav = await utilities.getNav()
+  classificationSelect = await utilities.buildClassificationList()
+  res.render("inventory/add-inventory", {
+    title: "Add or Update Inventory",
+    nav, 
+    classificationSelect,
+    inv_make: "",
+    inv_model: "",
+    inv_year: "",
+    inv_description: "",
+    inv_image: "/images/vehicles/no-image.png",
+    inv_thumbnail: "/images/vehicles/no-image-tn.png",
+    inv_price: "",
+    inv_miles: "",
+    inv_color: "",
+    errors: null
+  })
+}
+
+
+/* ***********************
+ *  Process Add Inventory
+ * ******************** */
+
+invCont.addInventory = async function (req, res) {
+  const { classification_id, inv_make, inv_model, inv_year, inv_description, inv_image,
+          inv_thumbnail, inv_price, inv_miles, inv_color } = req.body
+  const newInventory = await invModel.addNewInventory(classification_id, inv_make, inv_model,
+         inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color)
+
+  if (newInventory) {
+    req.flash("notice", `New inventory item "${inv_make} ${inv_model}" added successfully`);
+    res.redirect("/inv/management");
+  } else {
+    req.flash("notice", "Failed to add new inventory item.")
+    res.redirect("/inv/add-inventory");
   }
 }
 

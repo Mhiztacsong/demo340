@@ -12,10 +12,10 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 //Route to build inventory detail page
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId))
 
-// Route to inventory Management View
+// Route to deliver inventory Management View
 router.get("/management", utilities.handleErrors(invController.managementView))
 
-//Route to add classification
+//Route to deliver add classification form
 router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification))
 
 //Route to add new classification
@@ -24,5 +24,16 @@ router.post("/add-classification",
     validate.checkAddClassificationData,
     utilities.handleErrors(invController.addClassification)
 )
+
+//Route to deliver add inventory form
+router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory))
+
+//Route to add new inventory
+router.post("/add-inventory", 
+    validate.addInventoryRules(),
+    validate.checkAddInventoryData,
+    utilities.handleErrors(invController.addInventory)
+)
+
 
 module.exports = router;

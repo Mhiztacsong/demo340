@@ -119,9 +119,9 @@ validate.checkLoginData = async (req, res, next) => {
 }
 
 
-/************************************
- * Add Classification Data Validation Rules
- ************************************/
+/*******************************************************
+ * Add Classification in Inventory Data Validation Rules
+ *******************************************************/
 validate.addClassificationRules = () => {
   return [
     body("classification_name")
@@ -132,6 +132,11 @@ validate.addClassificationRules = () => {
   ]
 }
 
+
+
+/********************************
+ * Check add classification Data
+ *******************************/
 validate.checkAddClassificationData = async (req, res, next) => {
   const { classification_name } = req.body
   let errors = validationResult(req)
@@ -148,6 +153,91 @@ validate.checkAddClassificationData = async (req, res, next) => {
   }
   next()
 }
+
+
+/*******************************************************
+ * Add Inventory Data Validation Rules
+ *******************************************************/
+validate.addInventoryRules = () => {
+  return [
+    body("classification_id")
+      .trim()
+      .notEmpty().withMessage("Choose a vehicle classification"),
+
+    body("inv_make")
+      .trim()
+      .notEmpty().withMessage("Inventory make is required")
+      .bail()
+      .isLength({ min: 3 }).withMessage("Inventory make must be at least 3 characters"),
+
+    body("inv_model")
+      .trim()
+      .notEmpty().withMessage("Inventory model is required")
+      .bail()
+      .isLength({ min: 3 }).withMessage("Inventory model must be at least 3 characters"),
+
+    body("inv_year")
+      .notEmpty().withMessage("Inventory year is required")
+      .bail()
+      .isInt({ min: 1900, max: new Date().getFullYear() + 1 })
+      .withMessage("Enter a valid year"),
+
+    body("inv_description")
+      .trim()
+      .notEmpty().withMessage("Inventory description is required"),
+
+    body("inv_image")
+      .trim()
+      .notEmpty().withMessage("Image path is required"),
+
+    body("inv_thumbnail")
+      .trim()
+      .notEmpty().withMessage("Thumbnail path is required"),
+
+    body("inv_price")
+      .notEmpty().withMessage("Inventory price is required")
+      .bail()
+      .isFloat({ min: 0 }).withMessage("Price must be a positive number"),
+
+    body("inv_miles")
+      .notEmpty().withMessage("Inventory miles is required")
+      .bail()
+      .isInt({ min: 0 }).withMessage("Miles must be a non-negative integer"),
+
+    body("inv_color")
+      .trim()
+      .notEmpty().withMessage("Inventory color is required"),
+  ]
+}
+
+
+
+validate.checkAddInventoryData = async (req, res, next) => {
+    const { classification_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color } = req.body
+    let errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render("inventory/add-inventory", {
+            title: "Add or Update Inventory",
+            nav,
+            classification_id, 
+            inv_make, 
+            inv_model, 
+            inv_year, 
+            inv_description, 
+            inv_image, 
+            inv_thumbnail, 
+            inv_price, 
+            inv_miles, 
+            inv_color,
+            errors,
+        })
+        return
+    }
+    next()
+}
+
 
 
 module.exports = validate
